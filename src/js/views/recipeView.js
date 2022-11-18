@@ -5,19 +5,21 @@ import { Fraction } from 'fractional';
 class RecipeView {
   #parentElement = document.querySelector('.recipe');
   #data;
+  #errorMessage = 'We could not find that recipe. Please try another one!';
+  #message = '';
 
   render(data) {
     this.#data = data;
     const markup = this.#generateMarkup();
-    this.#clear;
+    this.#clear();
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
   #clear() {
-    this.#parentElement.innerHTML = '';
+    this.#parentElement.innerHTML = ' ';
   }
 
-  renderSpinner = () => {
+  renderSpinner() {
     const markup = `
       <div class="spinner">
         <svg>
@@ -26,9 +28,41 @@ class RecipeView {
       </div>
     `;
 
-    this.#parentElement.innerHTML = '';
+    this.#clear();
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
-  };
+  }
+
+  renderError(message = this.#errorMessage) {
+    const markup = `
+    <div class="error">
+      <div>
+        <svg>
+          <use href="${icons}#icon-alert-triangle"></use>
+        </svg>
+      </div>
+      <p>${message}</p>
+    </div>
+    `;
+
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderMessage(message = this.#message) {
+    const markup = `
+    <div class="message">
+      <div>
+        <svg>
+          <use href="${icons}#smile"></use>
+        </svg>
+      </div>
+      <p>${message}</p>
+    </div>
+    `;
+
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
 
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
@@ -95,9 +129,7 @@ class RecipeView {
       <h2 class="heading--2">Recipe ingredients</h2>
       <ul class="recipe__ingredient-list">
 
-      ${this.#data.ingredients
-        .map(this.#generateMarkupIngridient)
-        .join('')}
+      ${this.#data.ingredients.map(this.#generateMarkupIngridient).join('')}
       </ul>
     </div>
 
@@ -125,7 +157,7 @@ class RecipeView {
   }
 
   #generateMarkupIngridient(ing) {
-      return `
+    return `
       <li class="recipe__ingredient">
         <svg class="recipe__icon">
           <use href="${icons}#icon-check"></use>
