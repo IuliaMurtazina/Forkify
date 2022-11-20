@@ -12,13 +12,15 @@ import { async } from 'regenerator-runtime';
 //   module.hot.accept();
 // }
 
-
 const controlRecipes = async () => {
   try {
     const id = window.location.hash.slice(1);
 
     if (!id) return;
     recipeView.renderSpinner();
+
+    // 0) Update results view to mark selected search result
+    resultsView.update(model.getSearchResultsPage())
 
     // 1) loading recipe
     await model.loadRecipe(id);
@@ -35,7 +37,7 @@ const controlSearchResults = async () => {
     resultsView.renderSpinner();
 
     // 1) Get search query
-    const query = searchView.getQuery()
+    const query = searchView.getQuery();
     if (!query) return;
 
     // 2) Load search results
@@ -43,27 +45,37 @@ const controlSearchResults = async () => {
 
     // 3) Render results
     // resultsView.render(model.state.search.results)
-    resultsView.render(model.getSearchResultsPage())
+    resultsView.render(model.getSearchResultsPage());
 
     // 4) Render initial pagination buttons
-    paginationView.render(model.state.search)
+    paginationView.render(model.state.search);
   } catch (err) {
     console.log(err);
   }
 };
 
-const controlPagination = (goToPage) => {
-    // 1) Render NEW results
-    // resultsView.render(model.state.search.results)
-    resultsView.render(model.getSearchResultsPage(goToPage))
+const controlPagination = goToPage => {
+  // 1) Render NEW results
+  // resultsView.render(model.state.search.results)
+  resultsView.render(model.getSearchResultsPage(goToPage));
 
-    // 1) Render NEW pagination buttons
-    paginationView.render(model.state.search)
-}
+  // 1) Render NEW pagination buttons
+  paginationView.render(model.state.search);
+};
+
+const controlServings = (newServings) => {
+  // Update ther recipe servings (in state)
+  model.updateServings(newServings);
+
+  // Update the recipe view
+  // recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
+};
 
 const init = () => {
   recipeView.addHandlerRender(controlRecipes);
-  searchView.addHandlerSearch(controlSearchResults)
-  paginationView.addHandlerClick(controlPagination)
+  recipeView.addHandlerUpdateServings(controlServings);
+  searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 };
 init();
