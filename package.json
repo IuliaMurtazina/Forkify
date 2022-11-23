@@ -2,11 +2,11 @@
   "name": "forkify",
   "version": "1.0.0",
   "description": "Recipe application",
-  "index": "index.html",
+  "default": "index.html",
   "scripts": {
     "start": "lite-server",
     "parcel": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --dist-dir ./dist"
   },
   "author": "",
   "license": "ISC",
