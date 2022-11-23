@@ -2,11 +2,12 @@
   "name": "forkify",
   "version": "1.0.0",
   "description": "Recipe application",
-  "defau": "index.html",
+  "homepage": "https://iuliamurtazina.github.io/Forkify/",
+  "default": "index.html",
   "scripts": {
     "start": "lite-server",
     "parcel": "parcel index.html",
-    "build": "parcel build index.html --dist-dir ./dist --public-url https://iuliamurtazina.github.io/Forkify/"
+    "build": "parcel build index.html --public-url /Forkify/"
   },
   "author": "",
   "license": "ISC",
