@@ -7,7 +7,9 @@
   "scripts": {
     "start": "lite-server",
     "parcel": "parcel index.html",
-    "build": "parcel build index.html --public-url /Forkify/"
+    "build": "parcel build index.html --public-url /Forkify/",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +25,7 @@
   "dependencies": {
     "core-js": "^3.26.0",
     "fractional": "^1.0.0",
+    "gh-pages": "^4.0.0",
     "regenerator-runtime": "^0.13.10"
   }
 }
