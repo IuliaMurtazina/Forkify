@@ -9,7 +9,7 @@
     "parcel": "parcel index.html",
     "build": "parcel build index.html --dist-dir ./dist",
     "deploy": "gh-pages -d dist",
-    "predeploy": "parcel build index.html --public-url /Forkify/"
+    "predeploy": "parcel build index.html --public-url /Forkify/ --no-scope-hoist"
   },
   "author": "",
   "license": "ISC",
